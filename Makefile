@@ -32,3 +32,5 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 
 clean:
 	rm -f $(TARGET) $(OBJECTS)
+	rm -f $(SRCDIR)/main
+	rm -rf $(SRCDIR)/main.dSYM
