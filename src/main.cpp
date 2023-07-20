@@ -3,10 +3,11 @@
 #include <string>
 using namespace std;
 
-
-
+#include "def.hpp"
 
 int main(int args, char **argv) {
+    hi();
+    
     // check args
     if(args < 2) {
         cerr << "No input file" << endl;

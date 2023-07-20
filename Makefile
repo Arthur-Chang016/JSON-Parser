@@ -28,7 +28,7 @@ $(TARGET): $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(BUILDDIR)  # Create the build directory if it doesn't exist
 	$(CC) $(CFLAGS) -c -o $@ $<
-	
+
 	
 # miscell commands
 run:
