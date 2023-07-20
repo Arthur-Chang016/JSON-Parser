@@ -1,0 +1,5 @@
+main
+build
+build/*
+src/main.dSYM
+src/main.dSYM/*
