@@ -1,11 +1,10 @@
 # the compiler: gcc for C program, define as g++ for C++
 CC = g++-13
 
-# source directory
+# directories
 SRCDIR = src
-
-# build directory
 BUILDDIR = build
+TESTDIR = test
 
 # compiler flags:
 #  -g     - this flag adds debugging information to the executable file
@@ -29,8 +28,16 @@ $(TARGET): $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(BUILDDIR)  # Create the build directory if it doesn't exist
 	$(CC) $(CFLAGS) -c -o $@ $<
+	
+	
+# miscell commands
+run:
+	./main $(TESTDIR)/sample.json
 
 clean:
 	rm -f $(TARGET) $(OBJECTS)
 	rm -f $(SRCDIR)/main
 	rm -rf $(SRCDIR)/main.dSYM
+	rm -rf $(BUILDDIR)
+
+.SILENT: run
