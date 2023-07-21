@@ -1,7 +1,11 @@
 {
     "files.associations": {
         "iostream": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "string": "cpp",
+        "iosfwd": "cpp",
+        "filesystem": "cpp",
+        "format": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

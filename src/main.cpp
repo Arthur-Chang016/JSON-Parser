@@ -13,15 +13,66 @@ using namespace std;
 
 void Error(string s);
 
-JSONObject MetaObject(string_view s, int start, int end, const vector<int> &nextClose) {
+JSONObject DataOjbect(const string_view s, const int start, const int end, const vector<int> &nextClose);
+JSONObject MetaObject(const string_view s, const int start, const int end, const vector<int> &nextClose);
+
+pair<string, JSONObject> DictObject(const string_view s, const int start, const int end, const vector<int> &nextClose) {
+    return {"", JSONObject()};
+}
+
+JSONObject MetaObject(const string_view s, const int start, const int end, const vector<int> &nextClose) {
     if(s[start] != '[' && s[start] != '{') Error("MetaObject not start with [ { : " + to_string(start) + s[start]);
-    
+    if(s[start] == '[') {
+        // create list
+        JSONList ret;
+        // split by,
+        int last = start;
+        for(int i = start; i <= end; ++i) {
+            if(i == end || s[i] == ',') {
+                JSONObject obj = DataOjbect(s, last, i, nextClose);
+                ret.add(obj);
+                // update
+                last = i + 1;
+            }
+        }
+        return ret;
+    } else {  // s[start] == '{'
+        // create dict
+        JSONDict ret;
+        // split by,
+        int last = start;
+        for(int i = start; i <= end; ++i) {
+            if(i == end || s[i] == ',') {
+                auto [str, obj] = DictObject(s, last, i, nextClose);
+                ret.add(str, obj);
+                // update
+                last = i + 1;
+            }
+        }
+        return ret;
+    }
+}
+
+/**
+ * objects can be in list or value of dict
+*/
+JSONObject DataOjbect(const string_view s, const int start, const int end, const vector<int> &nextClose) {
+    int len = end - start;
+    if(len <= 0) Error("length error: " + to_string(len));
+    char fir = s[start], last = s[end];
+    if((len == 5 && s.substr(start, len) == "false") || (len == 4 && s.substr(start, len) == "true")) {
+        return len == 5 ? JSONBoolean(false) : JSONBoolean(true);
+    } else if(fir == '\"' && last == '\"') {  // string
+        return JSONString(s.substr(start + 1, len - 2));
+    } else if(fir == '[' || fir == '{') {
+        return MetaObject(s, start, end, nextClose);
+    }
     
     
     return JSONObject();
 }
 
-JSONObject JSONParse(string_view s, int start, int end, const vector<int> &nextClose) {
+JSONObject JSONParse(const string_view s, const int start, const int end, const vector<int> &nextClose) {
     return MetaObject(s, start, end, nextClose);
 }
 
