@@ -12,6 +12,11 @@ using namespace std;
 #include "Util.hpp"
 
 
+JSONObject JSONParse(string_view s, const vector<int> &nextClose) {
+    
+    return JSONObject();
+}
+
 
 int main(int args, char **argv) {
     // check args
@@ -37,6 +42,8 @@ int main(int args, char **argv) {
         cerr << "Parse Error" << endl;
         return 1;
     }
+    
+    JSONObject json = JSONParse(file, next);
     
     // JSONList o;
     // JSONList b;
