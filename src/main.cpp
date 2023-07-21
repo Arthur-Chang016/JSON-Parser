@@ -66,10 +66,17 @@ JSONObject DataOjbect(const string_view s, const int start, const int end, const
         return JSONString(s.substr(start + 1, len - 2));
     } else if(fir == '[' || fir == '{') {
         return MetaObject(s, start, end, nextClose);
+    } else {  // integers
+        long num;
+        try {
+            num = stoll(string(s.substr(start, len)));
+        } catch (const invalid_argument& e) {
+            Error(string("Invalid argument: ") + e.what());
+        } catch (const out_of_range& e) {
+            Error(string("Out of range: ") + e.what());
+        }
+        return JSONNumber(num);
     }
-    
-    
-    return JSONObject();
 }
 
 JSONObject JSONParse(const string_view s, const int start, const int end, const vector<int> &nextClose) {
