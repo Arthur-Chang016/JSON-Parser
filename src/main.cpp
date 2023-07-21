@@ -11,10 +11,18 @@ using namespace std;
 #include "def.hpp"
 #include "Util.hpp"
 
+void Error(string s);
 
-JSONObject JSONParse(string_view s, const vector<int> &nextClose) {
+JSONObject MetaObject(string_view s, int start, int end, const vector<int> &nextClose) {
+    if(s[start] != '[' && s[start] != '{') Error("MetaObject not start with [ { : " + to_string(start) + s[start]);
+    
+    
     
     return JSONObject();
+}
+
+JSONObject JSONParse(string_view s, int start, int end, const vector<int> &nextClose) {
+    return MetaObject(s, start, end, nextClose);
 }
 
 
@@ -43,7 +51,7 @@ int main(int args, char **argv) {
         return 1;
     }
     
-    JSONObject json = JSONParse(file, next);
+    JSONObject json = JSONParse(file, 0, file.size(), next);
     
     // JSONList o;
     // JSONList b;
