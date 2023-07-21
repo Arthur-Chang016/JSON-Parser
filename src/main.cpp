@@ -5,6 +5,7 @@
 #include <vector>
 #include <cctype>
 #include <algorithm>
+#include <unordered_map>
 using namespace std;
 
 #include "def.hpp"
@@ -37,11 +38,15 @@ int main(int args, char **argv) {
         return 1;
     }
     
-    for(int i = 0; i < (int)next.size(); ++i) {
-        if(next[i] == -1) continue;
-        int ne = next[i];
-        cout << i << ' ' << file[i] << ", " << ne << ' ' << file[ne] << endl;
-    }
+    // JSONList o;
+    // JSONList b;
+    // o.add(b);
+    
+    // for(int i = 0; i < (int)next.size(); ++i) {
+    //     if(next[i] == -1) continue;
+    //     int ne = next[i];
+    //     cout << i << ' ' << file[i] << ", " << ne << ' ' << file[ne] << endl;
+    // }
     
     
     
